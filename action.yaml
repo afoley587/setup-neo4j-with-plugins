@@ -1,7 +1,5 @@
 name: 'Setup Neo4j With Plugins'
-description: |
-  Setup Neo4j with any of the available plugins listed on
-  the [documentation](https://neo4j.com/docs/operations-manual/current/docker/plugins/#docker-plugins-neo4jplugins).
+description: 'Setup Neo4j with any of the available plugins listed on the Neo4j docs site.'
 branding:
   icon: 'database'
   color: 'blue'
