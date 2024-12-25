@@ -1,0 +1,30 @@
+name: 'Setup Neo4j With Plugins'
+description: |
+  Setup Neo4j with any of the available plugins listed on
+  the [documentation](https://neo4j.com/docs/operations-manual/current/docker/plugins/#docker-plugins-neo4jplugins).
+branding:
+  icon: 'database'
+  color: 'blue'
+inputs:
+  neo4j-version:
+    description: 'Version of Neo4j docker image to use'
+    required: false
+    default: 'latest'
+  neo4j-plugins:
+    description: |
+      Comma separated list of plugins to use. 
+      See action description for available plugins.'
+    required: false
+    default: ''
+outputs:
+  docker_container:
+   description: "ID of the created docker image."
+   value: ${{ steps.run-image.outputs.docker_container }}
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      id: run-image
+      run: |
+        container=$(python ${{ github.action_path }}/main.py --tag ${{ inputs.neo4j-version || 'latest' }} --plugins ${{ inputs.neo4j-plugins || '' }})
+        echo "docker_container=$container" >> $GITHUB_OUTPUT

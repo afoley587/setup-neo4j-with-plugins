@@ -1,0 +1,55 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "action.yaml"
+      - "main.py"
+      - ".github/workflows/test.yml"
+
+jobs:
+  test-no-plugins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Neo4j Default
+        id: default-args
+        uses: ./
+
+      - name: Get logs
+        run: sleep 25 && docker logs "${{ steps.default-args.outputs.docker_container }}"
+
+  test-custom-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Neo4j With Custom Version
+        id: with-custom-version
+        uses: ./
+        with:
+          neo4j-version: community-bullseye
+      
+      - name: Get logs
+        run: sleep 25 && docker logs "${{ steps.with-custom-version.outputs.docker_container }}"
+
+  test-plugins-and-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Neo4j With Custom Version And Plugins
+        uses: ./
+        id: with-custom-version-and-plugins
+        with:
+          neo4j-version: community-bullseye
+          neo4j-plugins: apoc,graph-data-science
+
+      - name: Get logs
+        run: sleep 25 && docker logs "${{ steps.with-custom-version-and-plugins.outputs.docker_container }}"
