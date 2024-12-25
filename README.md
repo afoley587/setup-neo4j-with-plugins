@@ -24,11 +24,15 @@ The ID of the created docker image.
 
 ## Example usage
 ```yaml
-uses: afoley487/setup-neo4j-with-plugins
+uses: afoley587/setup-neo4j-with-plugins
 with:
   neo4j-version: 'community-bullseye'
   neo4j-plugins: 'apoc,graph-data-science'
 ```
+
+See 
+[test cases](https://github.com/afoley587/setup-neo4j-with-plugins/blob/main/.github/workflows/test.yml)
+for more examples.
 
 ## License
 This action is licensed under the 
